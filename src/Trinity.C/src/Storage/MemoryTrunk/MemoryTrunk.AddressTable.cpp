@@ -121,13 +121,14 @@ namespace Storage
 
         HeadGroup HeadGroupShadow;
         uint32_t CommittedTailShadow;
+        bool  AddressTableOneRegion = false;
         HeadGroupShadow.head_group.store(head.head_group.load(std::memory_order_relaxed));
         CommittedTailShadow = committed_tail;
 
         if (CommittedTailShadow == 0 && HeadGroupShadow.committed_head == 0)
             goto exit;
 
-        bool  AddressTableOneRegion = (CommittedTailShadow < HeadGroupShadow.committed_head) ||
+        AddressTableOneRegion = (CommittedTailShadow < HeadGroupShadow.committed_head) ||
             (CommittedTailShadow == HeadGroupShadow.committed_head && CommittedTailShadow == 0);
 
         if (hashtable->FreeEntryCount != 0 && hashtable->FreeEntryCount == hashtable->NonEmptyEntryCount) // Double checking

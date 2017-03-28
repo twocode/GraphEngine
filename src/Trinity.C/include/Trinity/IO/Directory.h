@@ -5,6 +5,10 @@
 #pragma once
 #include <os/os.h>
 #include <Trinity/String.h>
+#ifndef TRINITY_PLATFORM_WINDOWS
+#include <dirent.h>
+#include <sys/stat.h>
+#endif
 namespace Trinity
 {
     namespace IO
@@ -22,6 +26,7 @@ namespace Trinity
                 DWORD attrs = GetFileAttributesW(path.ToWcharArray());
                 return ((attrs != INVALID_FILE_ATTRIBUTES) && (attrs & FILE_ATTRIBUTE_DIRECTORY));
 #else
+#include <dirent.h>
                 if (-1 != access(path.c_str(), F_OK))
                 {
                     DIR* pdir;

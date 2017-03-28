@@ -162,7 +162,7 @@
     <ClCompile Include="src\Network\Server\iocp\TrinitySocketServer.Send.cpp" />
     <ClCompile Include="src\Network\Server\iocp\TrinitySocketServer.Threading.cpp" />
     <ClCompile Include="src\Network\Server\posix\epoll.cpp" />
-    <ClCompile Include="src\Network\Server\posix\kqueue.cpp" />
+    <!--ClCompile Include="src\Network\Server\posix\kqueue.cpp" /-->
     <ClCompile Include="src\Network\Server\posix\TrinitySocketServer.cpp" />
     <ClCompile Include="src\Network\Server\TrinityServer.cpp" />
     <ClCompile Include="src\Network\Server\TrinitySocketServerTest.cpp" />

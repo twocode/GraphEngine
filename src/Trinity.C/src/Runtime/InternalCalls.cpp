@@ -183,7 +183,7 @@ DLL_EXPORT void*             C_aligned_malloc(uint64_t size, uint64_t alignment)
 #ifdef TRINITY_PLATFORM_WINDOWS
     return _aligned_malloc(size, alignment);
 #else
-    return aligned_alloc(size, alignment);
+    return calloc(size, alignment);
 #endif
 }
 DLL_EXPORT void              C_aligned_free(void* buff)

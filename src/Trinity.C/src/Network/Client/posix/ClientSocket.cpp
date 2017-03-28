@@ -5,6 +5,7 @@
 #include <os/os.h>
 #if !defined(TRINITY_PLATFORM_WINDOWS)
 #include "ClientSocket.h"
+#include "Network/Client/TrinityClient.h"
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -3,8 +3,12 @@
 // Licensed under the MIT license. See LICENSE.md file in the project root for full license information.
 //
 #pragma once
+#define __APPLE__ 
+#define __MACH__
+#define __darwin__
 #include <cstdint>
 #include <atomic>
+// #include "os/platforms/darwin.h"
 
 const int32_t COUNTER_THRESHOLD = 20000;
 

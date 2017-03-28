@@ -12,6 +12,7 @@
 #define PRINTSIZEOF(x) {Trinity::IO::Console::WriteLine("sizeof({0}) = {1}", #x, sizeof(x));}
 #define PRINTISPOD(x) {Trinity::IO::Console::WriteLine("is_pod({0}) = {1}", #x, std::is_pod<x>::value);}
 
+
 #if defined(TRINITY_PLATFORM_WINDOWS)
 inline void DisplayError(TCHAR* pszAPI, DWORD dwError)
 {
@@ -39,5 +40,6 @@ inline void DisplayError(TCHAR* pszAPI, DWORD dwError)
     ExitProcess(GetLastError());
 }
 #else
+// typedef unsigned int DWORD;
 inline void DisplayError(char* pszAPI, DWORD dwError) { }
 #endif

@@ -4,6 +4,10 @@
 //
 #include "TrinityCommon.h"
 #include "Mathematics/TrinityMath.h"
+#include <xmmintrin.h> 
+#include <emmintrin.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 double multiply_double_vector(double *  dv1, double *  dv2, int32_t count)
 {
@@ -37,7 +41,7 @@ double multiply_double_vector(double *  dv1, double *  dv2, int32_t count)
 		sum = _mm_add_sd(sum, _mm_mul_sd(a, b)); // r0 := a0 + b0, r1 := a1
 	}
 
-	double ALIGNED(16) tmp[2];
+	__attribute__ ((aligned(16))) double  tmp[2];
 	//double * dp =   (double*) ( ((int64_t)buff & mask16b) + 16 );
 	//! Stores two double-precision, floating-point values. The address p must be 16-byte aligned.
 	_mm_store_pd(tmp, sum);
@@ -54,7 +58,9 @@ double multiply_sparse_double_vector(double *  dv1, double *  dv2, int32_t * idx
 #ifdef TRINITY_PLATFORM_WINDOWS
 	double* __dv1 = (double*)_aligned_malloc((size_t)count << 3, 16);
 #else
-	double* __dv1 = (double*)aligned_alloc((size_t)count << 3, 16);
+	// double* __dv1 = (double*)aligned_alloc((size_t)count << 3, 16);
+	double* __dv1 = (double*)calloc((size_t)count << 3, 16);// malloc is 16 byte aligned.
+	
 #endif
 
 	for (int32_t i = 0; i<count; i++)
@@ -88,7 +94,7 @@ double multiply_sparse_double_vector(double *  dv1, double *  dv2, int32_t * idx
 	free(__dv1);
 #endif
 
-	double ALIGNED(16) tmp[2];
+	double __attribute__ ((aligned(16))) tmp[2];
 	//double * dp =   (double*) ( ((int64_t)buff & mask16b) + 16 );
 	//! Stores two double-precision, floating-point values. The address p must be 16-byte aligned.
 	_mm_store_pd(tmp, sum);

@@ -102,7 +102,7 @@ namespace Trinity
                     handle = GetStdHandle(STD_OUTPUT_HANDLE);
                 SetConsoleTextAttribute(handle, (WORD)color);
 #else
-                TRINITY_COMPILER_WARNING("Console::SetColor not implemented")
+//                TRINITY_COMPILER_WARNING("Console::SetColor not implemented")
 #endif
             }
 

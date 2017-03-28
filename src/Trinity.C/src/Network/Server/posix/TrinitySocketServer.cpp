@@ -106,7 +106,7 @@ namespace Trinity
             {
                 sockaddr addr;
                 socklen_t addrlen = sizeof(sockaddr);
-                int connected_sock_fd = accept4(accept_sock, &addr, &addrlen, SOCK_NONBLOCK);
+                int connected_sock_fd = accept(accept_sock, &addr, &addrlen);
                 if (-1 == connected_sock_fd)
                 {
                     /* Break the loop if listening socket is shut down. */
@@ -148,6 +148,8 @@ namespace Trinity
             {
                 accept_sock = socket(addrinfop->ai_family, addrinfop->ai_socktype,
                                      addrinfop->ai_protocol);
+
+                fcntl(accept_sock, F_SETFL, O_NONBLOCK);  // set to non-blocking
                 // TODO bind on any address
                 if (-1 == accept_sock)
                     continue;

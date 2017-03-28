@@ -9,6 +9,7 @@
 
 #if !defined(TRINITY_PLATFORM_WINDOWS)
 #include <thread>
+#include <unistd.h>
 #endif
 
 namespace Trinity

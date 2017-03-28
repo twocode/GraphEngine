@@ -5,6 +5,7 @@
 #include <os/os.h>
 #if ((!defined(__linux__)) && (defined(__unix__) || (defined(__APPLE__) && defined(__MACH__))))
 #include "Network/ProtocolConstants.h"
+#include "Network/Client/TrinityClient.h"
 #include "TrinitySocketServer.h"
 #include <sys/event.h>
 
@@ -30,7 +31,7 @@ namespace Trinity
                         {
                             fprintf(stderr, "cannot delete fd from kqueue");
                         }
-                        ClientCloseConnection(kevt_out.ident, false);
+                        CloseClientConnection(pContext, false);
                     }
                     else if (kevt_out.flags & EVFILT_READ)
                     {

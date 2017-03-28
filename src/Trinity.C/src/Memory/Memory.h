@@ -4,6 +4,8 @@
 //
 #pragma once
 #include "TrinityCommon.h"
+typedef int BOOL;
+typedef void * LPVOID;
 
 namespace Memory
 {

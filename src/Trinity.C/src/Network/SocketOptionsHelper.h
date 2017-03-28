@@ -51,8 +51,8 @@ namespace Trinity
 #else
                 int32_t keepidle  = 60000;
                 int32_t keepintvl = 3000;
-                setsockopt(socket, IPPROTO_TCP, TCP_KEEPIDLE, &keepidle, sizeof(int32_t));
-                setsockopt(socket, IPPROTO_TCP, TCP_KEEPINTVL, &keepintvl, sizeof(int32_t));
+                //setsockopt(socket, IPPROTO_TCP, TCP_KEEPIDLE, &keepidle, sizeof(int32_t));
+                //setsockopt(socket, IPPROTO_TCP, TCP_KEEPINTVL, &keepintvl, sizeof(int32_t));
 #endif
             }
 

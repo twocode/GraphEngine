@@ -10,7 +10,13 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/ptrace.h>
+#include <sys/mman.h>
+#include <xmmintrin.h> 
+#include <emmintrin.h>
 #endif
+
+#define TRUE 1
+#define FALSE 0
 
 namespace Memory
 {
@@ -151,7 +157,7 @@ namespace Memory
     the current commitment state of each page.
 
     ***************************************/
-    void * MemoryCommit(void * buf, uint64_t size)
+    void * MemoryCommit(void * buf, size_t size)
     {
 #if defined(TRINITY_PLATFORM_WINDOWS)
         //Commit the desired size, the actually allocated space will be larger(up to a whole page) than the desired size.
@@ -449,7 +455,7 @@ namespace Memory
 #if defined(TRINITY_PLATFORM_WINDOWS)
 #pragma warning(suppress: 6250)
         return VirtualFree(lpAddr, size, MEM_DECOMMIT);
-#elif defined(TRINITY_PLATFORM_LINUX)
+#else//if defined(TRINITY_PLATFORM_LINUX)
         do
         {
             if(mprotect(lpAddr, size, PROT_NONE) != 0) break;
@@ -458,8 +464,8 @@ namespace Memory
         }while(0);
 
         return false;
-#else
-#error DecommitMemory: Not supported
+//#else
+//#error DecommitMemory: Not supported
 #endif
     }
 
@@ -474,7 +480,7 @@ namespace Memory
 #if defined(TRINITY_PLATFORM_WINDOWS)
         LargePageMinimum = GetLargePageMinimum();
 #else
-        TRINITY_COMPILER_WARNING("InitLargePageSize: Linux support is absent")
+//        TRINITY_COMPILER_WARNING("InitLargePageSize: Linux support is absent")
 #endif
     }
 
@@ -487,7 +493,7 @@ namespace Memory
             MEM_COMMIT | MEM_RESERVE | MEM_LARGE_PAGES,          // Allocate Large pages
             PAGE_READWRITE);
 #else
-        TRINITY_COMPILER_WARNING("LargePageAlloc: Linux support is absent")
+//        TRINITY_COMPILER_WARNING("LargePageAlloc: Linux support is absent")
 #endif
     }
 
@@ -499,7 +505,8 @@ namespace Memory
 #if defined(TRINITY_PLATFORM_WINDOWS)
         double* p = (double*)_aligned_malloc(size, alignment);
 #else
-        double* p = (double*)aligned_alloc(alignment, size);
+        // double* p = (double*)aligned_alloc(alignment, size);
+        double* p = (double*)calloc(alignment, size);
 #endif
         uint64_t count = size >> 3;
         int32_t loop = count & 0xfffffffe; // count/2 * 2;

@@ -6,6 +6,10 @@
 #include "Server/TrinityServer.h"
 
 using namespace Trinity;
+#define BOOL int
+#define TRUE 1
+#define FALSE 0
+#define DLL_EXPORT extern "C" __attribute__ ((visibility ("default")))
 
 // Client interfaces
 

@@ -314,7 +314,7 @@ namespace Trinity
                 GetModuleFileNameW(hmodule, lpFilename, static_cast<DWORD>(lpFilename.Length()));
                 lpFilename[lpFilename.Length() - 1] = 0;
                 return GetDirectoryName(GetFullPath(String::FromWcharArray(lpFilename, -1)));
-#elif defined(TRINITY_PLATFORM_LINUX)
+#else//if defined(TRINITY_PLATFORM_LINUX)
                 // XXX does not make sense if MyAssemblyPath always point to the mono host...
                 char* filename_buf    = new char[1024];
                 int filename_buf_size = readlink("/proc/self/exe", filename_buf, 1024);
@@ -323,8 +323,8 @@ namespace Trinity
                 String ret(filename_buf);
                 delete[] filename_buf;
                 return GetDirectoryName(ret);
-#else
-#error Not supported
+//#else
+//#error Not supported
 #endif
             }
         }
